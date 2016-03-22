@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>MQTT Websocket Client</title>
+
+<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+</head>
+<body>
+	<div class="container-full">
+		<h1 class="text-center">MQTT Websocket Client</h1>
+	</div>
+	<div class="conainer-fluid panel-group">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" href="#collapseOne">
+          Connection to MQTT Broker
+        </a>
+      </h4>
+    </div>
+	<div id="collapseOne" class="panel-collapse collapse in">
+		<br>
+		<label>Status:&nbsp;</label><span id="status">Not Connected</span>
+		<form class="form-inline" id="connection">
+			<br>
+			<div class="form-group">
+				<label>MQTT Broker:&nbsp;</label><input type="text" id="broker" placeholder="IP/DNS address" autofocus required>
+			</div>
+			<div class="form-group">
+				<label>Port:&nbsp;</label><input id="brokerport" placeholder="Port number" required>
+			</div>
+			<div class="form-group">
+				<label>ClientId:&nbsp;</label><span id="cid">Not Assigned</span>
+			</div>
+			<br><br>
+			<input id="connect" class="btn btn-default" type="button" onclick="wsclient.connect();" value="Connect"/>
+			<input id="disconnect" class="btn btn-default" type="button" onclick="wsclient.disconnect();" value="Disconnect"/>
+		</form>
+		<br><br>
+	</div>
+	</div>
+	<br>
+		<div class="col-sm-6">
+		<div class="panel panel-primary">		
+		<div class="panel-heading">
+      		<h4 class="">
+          		Publish
+      		</h4>
+    	</div>
+      	<div class="panel-body">				
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>Topic:&nbsp;</label><textarea id="pub_topic" rows="1" cols="30" placeholder="Topic to publish">/test</textarea><br>
+		<label>Message:&nbsp;</label><textarea id="message" rows="1" cols="30" placeholder="Write your message">Hi there!</textarea>
+		<label for="pub_qos">QoS</label>
+                                <select id="pub_qos" class="small">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+		<label>Retain: </label><input id="pub_retain" type="checkbox"><br>
+		<button class="btn btn-default" onclick="wsclient.publish($('#message').val(),$('#pub_topic').val(),parseInt($('#pub_qos').val()),$('#pub_retain').is(':checked'));">Publish</button>	
+		</div>
+		</div>		
+		<div class="panel panel-primary">
+		<div class="panel-heading">
+      		<h4 class="">
+          		Subscribe
+      		</h4>
+    	</div>
+      	<div class="panel-body">
+      		<div class="col-md-8">
+      			<div>
+				<label>Topic:&nbsp;</label><textarea id="sub_topic" rows="1" cols="30" placeholder="Topic to sublish">/test</textarea>
+				</div>
+				<div>
+				<label for="sub_qos">QoS:&nbsp;&nbsp;</label>
+                <select id="sub_qos" class="small">
+                             <option>0</option>
+                             <option>1</option>
+                             <option>2</option>
+                </select>
+                </div>
+                <button class="btn btn-default" id="subbutton" onclick="wsclient.subscribe($('#sub_topic').val(),parseInt($('#sub_qos').val()));">Subscribe</button>
+      			</div>
+      			<div class="col-md-4">
+      				<ul id="subtlist">
+    				</ul>
+    			</div>
+		</div>
+		</div>
+		</div>
+		<div class="col-md-6" style="height:100%;">
+		<div class="panel panel-primary" style="height:100%;">
+		<div class="panel-heading">
+      		<h4 class="">
+          		Messages
+      		</h4>
+    	</div>
+      	<div class="panel-body" style="height:calc(100% - 80px);">
+      		<div id="messages"></div>
+      	</div>
+      	</div>
+		</div>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="mqttws31-min.js" type="text/javascript"></script>
+	<script src="mqtt.js" type="text/javascript"></script>
+	<script src="bootstrap.min.js"></script>
+	
+	</div>
+</body>
+</html>
