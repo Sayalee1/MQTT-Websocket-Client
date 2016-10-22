@@ -8,6 +8,6 @@
 6. Edit /etc/mosquitto/mosquitto.conf and add following:
     listener 1883
     listener 8001
-    protocol websocket
+    protocol websockets
 7. mosquitto -c /etc/mosquitto/mosquitto.conf
 
